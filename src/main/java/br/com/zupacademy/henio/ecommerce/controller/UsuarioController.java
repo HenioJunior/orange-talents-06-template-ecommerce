@@ -22,9 +22,11 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> criarUsuario(@RequestBody @Valid UsuarioRequest request) {
+    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioRequest request) {
         Usuario usuario = request.toModel();
         repository.save(usuario);
         return ResponseEntity.ok().body("Usuário cadastrado");
     }
+
+
 }
