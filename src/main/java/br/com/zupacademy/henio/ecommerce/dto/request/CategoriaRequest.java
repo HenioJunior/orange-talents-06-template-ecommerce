@@ -7,6 +7,7 @@ import br.com.zupacademy.henio.ecommerce.validation.UniqueValue;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Optional;
 
 public class CategoriaRequest {
@@ -16,6 +17,7 @@ public class CategoriaRequest {
     private String nome;
 
     @NotNull
+    @Positive
     private long idCategoriaMae;
 
     public CategoriaRequest(String nome, long idCategoriaMae) {

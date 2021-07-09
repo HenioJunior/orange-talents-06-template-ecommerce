@@ -18,7 +18,6 @@ public class Categoria {
     @ManyToOne
     private Categoria categoriaMae;
 
-    @Deprecated
     public Categoria() {
     }
 
