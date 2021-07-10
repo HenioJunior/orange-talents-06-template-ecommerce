@@ -20,13 +20,23 @@ public class Categoria {
 
     public Categoria() {
     }
+    
+	public Categoria(@NotBlank String nome, Categoria categoriaMae) {
+		super();
+		this.nome = nome;
+		this.categoriaMae = categoriaMae;
+	}
+		
+	public Long getId() {
+		return id;
+	}
 
-    public Categoria(String nome, Categoria categoriaMae) {
-        this.nome = nome;
-        this.categoriaMae = categoriaMae;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public Categoria(String nome) {
-        this.nome = nome;
-    }
+	public Categoria getCategoriaMae() {
+		return categoriaMae;
+	}
+ 
 }

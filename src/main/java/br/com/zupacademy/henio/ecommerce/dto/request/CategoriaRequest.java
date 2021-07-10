@@ -20,22 +20,29 @@ public class CategoriaRequest {
     @Positive
     private long idCategoriaMae;
 
-    public CategoriaRequest(String nome, long idCategoriaMae) {
-        this.nome = nome;
-        this.idCategoriaMae = idCategoriaMae;
-    }
+    public CategoriaRequest(@NotBlank String nome, @NotNull @Positive long idCategoriaMae) {
+		super();
+		this.nome = nome;
+		this.idCategoriaMae = idCategoriaMae;
+	}
+    
+    public String getNome() {
+		return nome;
+	}
 
-    public void setIdCategoriaMae(long idCategoriaMae) {
-        this.idCategoriaMae = idCategoriaMae;
-    }
+	public long getIdCategoriaMae() {
+		return idCategoriaMae;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Categoria toModel(CategoriaRepository repository) {
+	public Categoria toModel(CategoriaRepository repository) {
         Optional<Categoria> obj = repository.findById(idCategoriaMae);
         Categoria categoriaMae = obj.orElseThrow(() -> new EntityNotFoundException("Id da categoria não encontrado."));
         return new Categoria(nome, categoriaMae);
     }
+
+	@Override
+	public String toString() {
+		return "Categoria criada [nome=" + nome + ", idCategoria=" + idCategoriaMae + "]";
+	}
+	   
 }

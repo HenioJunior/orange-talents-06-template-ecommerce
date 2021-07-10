@@ -1,17 +1,18 @@
 package br.com.zupacademy.henio.ecommerce.config.security;
 
-import br.com.zupacademy.henio.ecommerce.model.Usuario;
-import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Optional;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import br.com.zupacademy.henio.ecommerce.model.Usuario;
+import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
 
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
