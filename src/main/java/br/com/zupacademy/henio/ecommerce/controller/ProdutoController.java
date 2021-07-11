@@ -59,12 +59,13 @@ public class ProdutoController {
 
     @PostMapping(value = "/{id}/imagens")
     @Transactional
-    public ResponseEntity<String> adicionaImagens(@PathVariable("id") Long id, @Valid ImagensRequest request) {
-        Usuario usuario = authenticated();
-        long donoId = 1;
-        if(usuario == null || usuario.getId() != donoId) {
-            throw new AuthorizationException("Acesso negado");
-        }
+    public ResponseEntity<String> adicionaImagens( @PathVariable("id") Long id, @Valid ImagensRequest request) {
+    	Usuario usuarioAutenticado = authenticated();
+		Usuario usuario = usuarioRepository.findByEmail("alex@gmail.com").get();
+				
+		if (!(usuarioAutenticado.equals(usuario))) {
+			throw new AuthorizationException("Acesso negado");
+		}
 
         Set<String> links = uploaderFake.envia(request.getImagens());
 		Produto produto = produtoRepository.findById(id).get();

@@ -48,6 +48,10 @@ public class Usuario implements UserDetails {
 		this.email = email;
 		this.senha = senha;
 	}
+        
+	public Usuario(@Email @NotBlank String email) {
+		this.email = email;
+	}
 
 	@Override
     public boolean equals(Object o) {

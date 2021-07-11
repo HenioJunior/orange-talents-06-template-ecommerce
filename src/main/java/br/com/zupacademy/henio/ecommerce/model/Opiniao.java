@@ -49,7 +49,4 @@ public class Opiniao {
 		this.produto = produto;
 		this.consumidor = consumidor;
 	}
-
-	
-
 }
