@@ -31,6 +31,14 @@ public class ResourceExceptionHandler {
         for(FieldError f : e.getBindingResult().getFieldErrors()) {
         err.addError(f.getField(), f.getDefaultMessage());
     }
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization(AuthorizationException e , HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        StandardError err = new StandardError(Instant.now(), status.value(), "Acesso negado",
+                e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
     }

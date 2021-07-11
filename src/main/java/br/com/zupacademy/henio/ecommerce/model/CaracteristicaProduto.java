@@ -14,7 +14,7 @@ import com.sun.istack.NotNull;
 @Entity
 @Table(name = "tb_caracteristica_produto")
 public class CaracteristicaProduto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,7 +22,7 @@ public class CaracteristicaProduto {
 	private String nome;
 	@NotBlank
 	private String descricao;
-	
+
 	@Valid
 	@NotNull
 	@ManyToOne
@@ -32,5 +32,8 @@ public class CaracteristicaProduto {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.produto = produto;
+	}
+	@Deprecated
+	public CaracteristicaProduto() {
 	}
 }

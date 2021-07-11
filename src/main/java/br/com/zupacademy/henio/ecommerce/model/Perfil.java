@@ -13,6 +13,7 @@ public class Perfil implements GrantedAuthority {
 	private Long id;
 	private String nome;
 
+	@Deprecated
 	public Perfil() {
 	}
 

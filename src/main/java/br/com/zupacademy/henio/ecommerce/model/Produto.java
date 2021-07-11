@@ -59,13 +59,16 @@ public class Produto {
 
 	@NotNull
 	@PastOrPresent
-	private final LocalDateTime instanteDaCriacao = LocalDateTime.now();
+	private LocalDateTime instanteDaCriacao = LocalDateTime.now();
 
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
 	private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
+
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<ImagemProduto> imagens = new HashSet<>();
 	
+	@Deprecated
 	public Produto() {
-		
 	}
 
 	public Produto(@NotBlank String nome, @Positive @NotNull BigDecimal valor, @PositiveOrZero @NotNull int quantidade,
@@ -108,4 +111,24 @@ public class Produto {
 		return true;
 	}
 
+	public void associaImagens(Set<String> links) {
+		Set<ImagemProduto> imagens = links.stream().map(link -> new ImagemProduto(this, link))
+				.collect(Collectors.toSet());
+		this.imagens.addAll(imagens);
+	}
+
+	@Override
+	public String toString() {
+		return "Produto{" +
+				"nome='" + nome + '\'' +
+				", valor=" + valor +
+				", quantidade=" + quantidade +
+				", descricao='" + descricao + '\'' +
+				", categoria=" + categoria +
+				", usuario=" + usuario +
+				", instanteDaCriacao=" + instanteDaCriacao +
+				", caracteristicas=" + caracteristicas +
+				", imagens=" + imagens +
+				'}';
+	}
 }
