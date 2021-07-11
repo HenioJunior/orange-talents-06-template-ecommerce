@@ -62,7 +62,7 @@ public class ProdutoRequest {
 		return caracteristicas;
 	}
 		
-	public Produto toModel(CategoriaRepository repository, UsuarioRepository usuarioRepository) {
+	public Produto toModel(@NotNull @Valid CategoriaRepository repository, @NotNull @Valid UsuarioRepository usuarioRepository) {
 		Usuario usuario = usuarioRepository.findByEmail("alex@gmail.com").get();
 		Optional<Categoria> obj = repository.findById(idCategoria);
 		Categoria categoria = obj.orElseThrow(() -> new EntityNotFoundException("Id da categoria não encontrado."));

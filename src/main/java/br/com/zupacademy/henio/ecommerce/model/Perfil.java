@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_perfil")
 public class Perfil implements GrantedAuthority {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

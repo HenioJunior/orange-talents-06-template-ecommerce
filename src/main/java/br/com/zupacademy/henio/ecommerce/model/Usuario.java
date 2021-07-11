@@ -14,8 +14,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario implements UserDetails {
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
