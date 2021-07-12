@@ -4,6 +4,8 @@ import static br.com.zupacademy.henio.ecommerce.controller.util.UsuarioAutentica
 
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -19,27 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zupacademy.henio.ecommerce.controller.exceptions.AuthorizationException;
 import br.com.zupacademy.henio.ecommerce.controller.util.UploaderFake;
-import br.com.zupacademy.henio.ecommerce.dto.request.ImagensRequest;
-import br.com.zupacademy.henio.ecommerce.dto.request.ProdutoRequest;
+import br.com.zupacademy.henio.ecommerce.dto.NovoProdutoImagemRequest;
+import br.com.zupacademy.henio.ecommerce.dto.NovoProdutoRequest;
 import br.com.zupacademy.henio.ecommerce.model.Produto;
 import br.com.zupacademy.henio.ecommerce.model.Usuario;
-import br.com.zupacademy.henio.ecommerce.repository.CategoriaRepository;
-import br.com.zupacademy.henio.ecommerce.repository.ProdutoRepository;
 import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
 import br.com.zupacademy.henio.ecommerce.validation.ProibeCaracteristicaComNomeIgualValidator;
 
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoController {
-
-    @Autowired
-    ProdutoRepository produtoRepository;
-    
-    @Autowired
-    CategoriaRepository categoriaRepository;
-    
+      
     @Autowired
     UsuarioRepository usuarioRepository;
+    
+    @PersistenceContext
+    EntityManager manager;
 
     @Autowired
     UploaderFake uploaderFake;
@@ -51,15 +48,15 @@ public class ProdutoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> criarProduto(@RequestBody @Valid ProdutoRequest request) {
-        Produto produto = request.toModel(categoriaRepository, usuarioRepository);
-        produtoRepository.save(produto);
+    public ResponseEntity<?> criarProduto(@RequestBody @Valid NovoProdutoRequest request) {
+        Produto produto = request.toModel(manager, usuarioRepository);
+        manager.persist(produto);
         return ResponseEntity.ok(request.toString());
     }
 
     @PostMapping(value = "/{id}/imagens")
     @Transactional
-    public ResponseEntity<String> adicionaImagens( @PathVariable("id") Long id, @Valid ImagensRequest request) {
+    public ResponseEntity<?> adicionaImagens(@PathVariable("id") Long id, @Valid NovoProdutoImagemRequest request) {
     	Usuario usuarioAutenticado = authenticated();
 		Usuario usuario = usuarioRepository.findByEmail("alex@gmail.com").get();
 				
@@ -68,10 +65,11 @@ public class ProdutoController {
 		}
 
         Set<String> links = uploaderFake.envia(request.getImagens());
-		Produto produto = produtoRepository.findById(id).get();
+		Produto produto = manager.find(Produto.class, id);
 		produto.associaImagens(links);
 
-		produtoRepository.save(produto);
-       return ResponseEntity.ok().body(produto.toString());
+		manager.merge(produto);
+						
+		return ResponseEntity.ok().body("Link criado: " + links);
     }
 }

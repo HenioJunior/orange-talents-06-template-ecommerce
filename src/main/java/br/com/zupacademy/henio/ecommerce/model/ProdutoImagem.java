@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "tb_imagem_produto")
-public class ImagemProduto {
+public class ProdutoImagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,20 @@ public class ImagemProduto {
     private String link;
 
     @Deprecated
-    public ImagemProduto() {
+    public ProdutoImagem() {
     }
 
-    public ImagemProduto(@NotNull @Valid Produto produto, @URL @NotBlank String link) {
+    public ProdutoImagem(@NotNull @Valid Produto produto, @URL @NotBlank String link) {
         this.produto = produto;
         this.link = link;
     }
+   
+	public String getLink() {
+		return link;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	     
 }

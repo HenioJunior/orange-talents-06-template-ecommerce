@@ -1,6 +1,6 @@
 package br.com.zupacademy.henio.ecommerce.controller;
 
-import br.com.zupacademy.henio.ecommerce.dto.request.UsuarioRequest;
+import br.com.zupacademy.henio.ecommerce.dto.NovoUsuarioRequest;
 import br.com.zupacademy.henio.ecommerce.model.Usuario;
 import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioRequest request) {
+    public ResponseEntity<?> criarUsuario(@RequestBody @Valid NovoUsuarioRequest request) {
         Usuario usuario = request.toModel();
         repository.save(usuario);
         return ResponseEntity.ok().body("Usuário cadastrado");

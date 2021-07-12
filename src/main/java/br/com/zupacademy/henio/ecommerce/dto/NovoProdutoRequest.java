@@ -1,12 +1,12 @@
-package br.com.zupacademy.henio.ecommerce.dto.request;
+package br.com.zupacademy.henio.ecommerce.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,22 +14,20 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
-import br.com.zupacademy.henio.ecommerce.exceptions.EntityNotFoundException;
 import br.com.zupacademy.henio.ecommerce.model.Categoria;
 import br.com.zupacademy.henio.ecommerce.model.Produto;
 import br.com.zupacademy.henio.ecommerce.model.Usuario;
-import br.com.zupacademy.henio.ecommerce.repository.CategoriaRepository;
 import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
 import br.com.zupacademy.henio.ecommerce.validation.ExistsId;
 
-public class ProdutoRequest {
+public class NovoProdutoRequest {
 
 	@NotBlank
 	private String nome;
 
 	@Positive
 	@NotNull
-	private BigDecimal valor;
+	private BigDecimal preco;
 
 	@PositiveOrZero
 	@NotNull
@@ -45,34 +43,33 @@ public class ProdutoRequest {
 
 	@Size(min = 3)
 	@Valid
-	private List<CaracteristicaProdutoRequest> caracteristicas = new ArrayList<>();
+	private List<NovoProdutoCaracteristicaRequest> caracteristicas = new ArrayList<>();
 
-	public ProdutoRequest(@NotBlank String nome, @Positive @NotNull BigDecimal valor,
+	public NovoProdutoRequest(@NotBlank String nome, @Positive @NotNull BigDecimal preco,
 			@PositiveOrZero @NotNull int quantidade, @NotBlank @Size(max = 1000) String descricao,
-			@NotNull long idCategoria, @Size(min = 3) @Valid List<CaracteristicaProdutoRequest> caracteristicas) {
+			@NotNull long idCategoria, @Size(min = 3) @Valid List<NovoProdutoCaracteristicaRequest> caracteristicas) {
 		this.nome = nome;
-		this.valor = valor;
+		this.preco = preco;
 		this.quantidade = quantidade;
 		this.descricao = descricao;
 		this.idCategoria = idCategoria;
 		this.caracteristicas.addAll(caracteristicas);
 	}
 		
-	public List<CaracteristicaProdutoRequest> getCaracteristicas() {
+	public List<NovoProdutoCaracteristicaRequest> getCaracteristicas() {
 		return caracteristicas;
 	}
 		
-	public Produto toModel(@NotNull @Valid CategoriaRepository repository, @NotNull @Valid UsuarioRepository usuarioRepository) {
+	public Produto toModel(@NotNull @Valid EntityManager manager, @NotNull @Valid UsuarioRepository usuarioRepository) {
 		Usuario usuario = usuarioRepository.findByEmail("alex@gmail.com").get();
-		Optional<Categoria> obj = repository.findById(idCategoria);
-		Categoria categoria = obj.orElseThrow(() -> new EntityNotFoundException("Id da categoria não encontrado."));
-		return new Produto(nome, valor, quantidade, descricao, categoria, usuario, caracteristicas);
+		Categoria categoria = manager.find(Categoria.class, idCategoria);
+		return new Produto(nome, preco, quantidade, descricao, categoria, usuario, caracteristicas);
 	}
 
 	public Set<String> buscaCaracteristicasIguais() {
 		HashSet<String> nomesIguais = new HashSet<>();
 		HashSet<String> resultados = new HashSet<>();
-		for (CaracteristicaProdutoRequest c : caracteristicas) {
+		for (NovoProdutoCaracteristicaRequest c : caracteristicas) {
 			String nome = c.getNome();
 			if (!nomesIguais.add(nome)) {
 				resultados.add(nome);
@@ -83,7 +80,7 @@ public class ProdutoRequest {
 
 	@Override
 	public String toString() {
-		return "ProdutoRequest [nome=" + nome + ", valor=" + valor + ", quantidade=" + quantidade + ", descricao="
+		return "ProdutoRequest [nome=" + nome + ", preco=" + preco + ", quantidade=" + quantidade + ", descricao="
 				+ descricao + ", idCategoria=" + idCategoria + ", caracteristicas=" + caracteristicas + "]";
 	}
 }

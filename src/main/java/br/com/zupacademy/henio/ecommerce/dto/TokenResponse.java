@@ -1,4 +1,4 @@
-package br.com.zupacademy.henio.ecommerce.dto.response;
+package br.com.zupacademy.henio.ecommerce.dto;
 
 public class TokenResponse {
 

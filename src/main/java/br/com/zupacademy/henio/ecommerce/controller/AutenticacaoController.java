@@ -1,8 +1,9 @@
 package br.com.zupacademy.henio.ecommerce.controller;
 
 import br.com.zupacademy.henio.ecommerce.config.security.TokenService;
-import br.com.zupacademy.henio.ecommerce.dto.request.LoginForm;
-import br.com.zupacademy.henio.ecommerce.dto.response.TokenResponse;
+import br.com.zupacademy.henio.ecommerce.dto.LoginFormRequest;
+import br.com.zupacademy.henio.ecommerce.dto.TokenResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenResponse> autenticar(@RequestBody @Valid LoginForm form) {
+    public ResponseEntity<TokenResponse> autenticar(@RequestBody @Valid LoginFormRequest form) {
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 
         try {

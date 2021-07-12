@@ -12,8 +12,8 @@ import javax.validation.constraints.NotBlank;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name = "tb_caracteristica_produto")
-public class CaracteristicaProduto {
+@Table(name = "tb_caracteristica")
+public class ProdutoCaracteristica {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +27,23 @@ public class CaracteristicaProduto {
 	@NotNull
 	@ManyToOne
 	private Produto produto;
+	
+	@Deprecated
+	public ProdutoCaracteristica() {
+	}
 
-	public CaracteristicaProduto(@NotBlank String nome, @NotBlank String descricao, @Valid Produto produto) {
+	public ProdutoCaracteristica(@NotBlank String nome, @NotBlank String descricao, @Valid Produto produto) {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.produto = produto;
 	}
-	@Deprecated
-	public CaracteristicaProduto() {
+
+	public String getNome() {
+		return nome;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+		
 }

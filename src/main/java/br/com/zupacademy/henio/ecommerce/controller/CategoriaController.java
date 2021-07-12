@@ -1,31 +1,31 @@
 package br.com.zupacademy.henio.ecommerce.controller;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zupacademy.henio.ecommerce.dto.request.CategoriaRequest;
+import br.com.zupacademy.henio.ecommerce.dto.NovaCategoriaRequest;
 import br.com.zupacademy.henio.ecommerce.model.Categoria;
-import br.com.zupacademy.henio.ecommerce.repository.CategoriaRepository;
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaController {
 
-    @Autowired
-    CategoriaRepository categoriaRepository;
+    @PersistenceContext
+	EntityManager manager;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> criarCategoria(@RequestBody @Valid CategoriaRequest request) {
-        Categoria categoria = request.toModel(categoriaRepository);
-        categoriaRepository.save(categoria);
+    public ResponseEntity<?> criarCategoria(@RequestBody @Valid NovaCategoriaRequest request) {
+        Categoria categoria = request.toModel(manager);
+        manager.persist(categoria);
         return ResponseEntity.ok(request.toString());
     }
 }

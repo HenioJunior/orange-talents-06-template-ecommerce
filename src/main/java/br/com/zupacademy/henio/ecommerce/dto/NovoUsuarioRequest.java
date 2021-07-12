@@ -1,4 +1,4 @@
-package br.com.zupacademy.henio.ecommerce.dto.request;
+package br.com.zupacademy.henio.ecommerce.dto;
 
 import br.com.zupacademy.henio.ecommerce.model.Usuario;
 import br.com.zupacademy.henio.ecommerce.validation.UniqueValue;
@@ -7,7 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class UsuarioRequest {
+public class NovoUsuarioRequest {
 
    @NotBlank
     private String nome;
@@ -19,7 +19,7 @@ public class UsuarioRequest {
    @Size(min = 6)
    private String senha;
 
-    public UsuarioRequest(String nome, String email, String senha) {
+    public NovoUsuarioRequest(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;

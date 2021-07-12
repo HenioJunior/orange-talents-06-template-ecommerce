@@ -5,13 +5,13 @@ import java.util.Set;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import br.com.zupacademy.henio.ecommerce.dto.request.ProdutoRequest;
+import br.com.zupacademy.henio.ecommerce.dto.NovoProdutoRequest;
 
 public class ProibeCaracteristicaComNomeIgualValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return ProdutoRequest.class.isAssignableFrom(clazz);
+		return NovoProdutoRequest.class.isAssignableFrom(clazz);
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class ProibeCaracteristicaComNomeIgualValidator implements Validator {
 		if (errors.hasErrors()) {
 			return;
 		}
-		ProdutoRequest request = (ProdutoRequest) target;
+		NovoProdutoRequest request = (NovoProdutoRequest) target;
 		Set<String> nomesIguais = request.buscaCaracteristicasIguais();
 		if (!nomesIguais.isEmpty()) {
 			errors.rejectValue("caracteristicas", null, "Você tem características iguais");
