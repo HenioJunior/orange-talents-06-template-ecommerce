@@ -188,4 +188,13 @@ public class Produto {
 				.collect(Collectors.toSet());
 	}
 
+    public boolean baixarDoEstoque(@Positive int quantidade) {
+		Assert.isTrue(quantidade > 0, "A quantidade deve ser maior que zero para baixar do estoque");
+
+		if(quantidade <= this.quantidade) {
+			this.quantidade -= quantidade;
+			return true;
+		}
+		return false;
+    }
 }
