@@ -1,6 +1,6 @@
 package br.com.zupacademy.henio.ecommerce.dto;
 
-import br.com.zupacademy.henio.ecommerce.dto.enums.GatewayPagamento;
+import br.com.zupacademy.henio.ecommerce.enums.GatewayPagamento;
 import br.com.zupacademy.henio.ecommerce.model.Produto;
 import br.com.zupacademy.henio.ecommerce.validation.ExistsId;
 

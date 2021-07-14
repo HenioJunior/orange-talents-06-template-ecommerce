@@ -2,6 +2,7 @@ package br.com.zupacademy.henio.ecommerce.controller;
 
 import static br.com.zupacademy.henio.ecommerce.controller.util.UsuarioAutenticado.authenticated;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -23,6 +24,7 @@ import br.com.zupacademy.henio.ecommerce.controller.exceptions.AuthorizationExce
 import br.com.zupacademy.henio.ecommerce.controller.util.UploaderFake;
 import br.com.zupacademy.henio.ecommerce.dto.NovoProdutoImagemRequest;
 import br.com.zupacademy.henio.ecommerce.dto.NovoProdutoRequest;
+import br.com.zupacademy.henio.ecommerce.exceptions.EntityNotFoundException;
 import br.com.zupacademy.henio.ecommerce.model.Produto;
 import br.com.zupacademy.henio.ecommerce.model.Usuario;
 import br.com.zupacademy.henio.ecommerce.repository.UsuarioRepository;
@@ -58,7 +60,9 @@ public class ProdutoController {
     @Transactional
     public ResponseEntity<?> adicionaImagens(@PathVariable("id") Long id, @Valid NovoProdutoImagemRequest request) {
     	Usuario usuarioAutenticado = authenticated();
-		Usuario usuario = usuarioRepository.findByEmail("alex@gmail.com").get();
+		Optional<Usuario> objUser = usuarioRepository.findByEmail("alex@gmail.com");
+				
+    	Usuario usuario = objUser.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 				
 		if (!(usuarioAutenticado.equals(usuario))) {
 			throw new AuthorizationException("Acesso negado");

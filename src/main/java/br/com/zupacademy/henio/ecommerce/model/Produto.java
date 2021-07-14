@@ -58,7 +58,7 @@ public class Produto {
 	@NotNull
 	@Valid
 	@ManyToOne
-	private Usuario usuario;
+	private Usuario dono;
 
 	@NotNull
 	@PastOrPresent
@@ -67,13 +67,13 @@ public class Produto {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<ProdutoCaracteristica> caracteristicas = new HashSet<>();
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<ProdutoImagem> imagens = new HashSet<>();
 	
 	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
 	private Set<Pergunta> perguntas = new TreeSet<>();
 	
-	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<Opiniao> opinioes = new HashSet<>();
 	
 	@Deprecated
@@ -87,7 +87,7 @@ public class Produto {
 		this.quantidade = quantidade;
 		this.descricao = descricao;
 		this.categoria = categoria;
-		this.usuario = usuario;
+		this.dono = usuario;
 		this.caracteristicas.addAll(caracteristicas
 				.stream().map(caracteristica -> caracteristica.toModel(this))
 				.collect(Collectors.toSet()));
@@ -125,7 +125,11 @@ public class Produto {
 				.collect(Collectors.toSet());
 		this.imagens.addAll(imagens);
 	}
-		
+			
+	public Long getId() {
+		return id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -134,24 +138,14 @@ public class Produto {
 		return preco;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
-	}
-
 	public String getDescricao() {
 		return descricao;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public Usuario getDono() {
+		return dono;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	
-	
-	
 	public Set<ProdutoCaracteristica> getCaracteristicas() {
 		return caracteristicas;
 	}
@@ -164,25 +158,6 @@ public class Produto {
 		return perguntas;
 	}
 
-	public Set<Opiniao> getOpinioes() {
-		return opinioes;
-	}
-
-	@Override
-	public String toString() {
-		return "Produto{" +
-				"nome='" + nome + '\'' +
-				", preco=" + preco +
-				", quantidade=" + quantidade +
-				", descricao='" + descricao + '\'' +
-				", categoria=" + categoria +
-				", usuario=" + usuario +
-				", instanteDaCriacao=" + instanteDaCriacao +
-				", caracteristicas=" + caracteristicas +
-				", imagens=" + imagens +
-				'}';
-	}
-	
 	public <T> Set<T> mapeiaOpinioes(Function<Opiniao, T> funcaoMap) {
 		return this.opinioes.stream().map(funcaoMap)
 				.collect(Collectors.toSet());
@@ -197,4 +172,13 @@ public class Produto {
 		}
 		return false;
     }
+
+	@Override
+	public String toString() {
+		return "Produto [nome=" + nome + ", preco=" + preco + ", quantidade=" + quantidade + "]";
+	}
+    
+    
+
+	
 }
