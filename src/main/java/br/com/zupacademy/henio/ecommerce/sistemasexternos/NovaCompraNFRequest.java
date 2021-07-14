@@ -1,4 +1,4 @@
-package br.com.zupacademy.henio.ecommerce.dto;
+package br.com.zupacademy.henio.ecommerce.sistemasexternos;
 
 import javax.validation.constraints.NotNull;
 

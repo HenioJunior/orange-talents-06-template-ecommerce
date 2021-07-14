@@ -1,13 +1,15 @@
-package br.com.zupacademy.henio.ecommerce.model;
+package br.com.zupacademy.henio.ecommerce.sistemasexternos;
 
 import java.util.Map;
 
+import br.com.zupacademy.henio.ecommerce.model.Compra;
+import br.com.zupacademy.henio.ecommerce.model.EventoCompraSucesso;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class NotaFiscal implements EventoCompraSucesso{
+public class NotaFiscal implements EventoCompraSucesso {
 
 	@Override
 	public void processa(Compra compra) {

@@ -1,4 +1,4 @@
-package br.com.zupacademy.henio.ecommerce.infrastructure.service;
+package br.com.zupacademy.henio.ecommerce.infrastructure;
 
 import org.springframework.mail.SimpleMailMessage;
 

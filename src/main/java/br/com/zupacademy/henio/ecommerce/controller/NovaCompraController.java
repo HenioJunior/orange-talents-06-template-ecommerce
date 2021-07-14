@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.zupacademy.henio.ecommerce.dto.NovaCompraRequest;
 import br.com.zupacademy.henio.ecommerce.enums.GatewayPagamento;
-import br.com.zupacademy.henio.ecommerce.infrastructure.service.EmailService;
+import br.com.zupacademy.henio.ecommerce.infrastructure.EmailService;
 import br.com.zupacademy.henio.ecommerce.model.Compra;
 import br.com.zupacademy.henio.ecommerce.model.Produto;
 import br.com.zupacademy.henio.ecommerce.model.Usuario;

@@ -1,5 +1,7 @@
-package br.com.zupacademy.henio.ecommerce.model;
+package br.com.zupacademy.henio.ecommerce.sistemasexternos;
 
+import br.com.zupacademy.henio.ecommerce.model.Compra;
+import br.com.zupacademy.henio.ecommerce.model.EventoCompraSucesso;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
@@ -7,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 @Service
-public class Ranking implements EventoCompraSucesso{
+public class Ranking implements EventoCompraSucesso {
 
 	@Override
 	public void processa(Compra compra) {

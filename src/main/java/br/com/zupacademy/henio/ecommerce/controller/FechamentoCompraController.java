@@ -17,7 +17,7 @@ import br.com.zupacademy.henio.ecommerce.dto.RetornoGatewayPagamento;
 import br.com.zupacademy.henio.ecommerce.dto.RetornoPagseguroRequest;
 import br.com.zupacademy.henio.ecommerce.dto.RetornoPaypalRequest;
 import br.com.zupacademy.henio.ecommerce.enums.StatusRetornoPagSeguro;
-import br.com.zupacademy.henio.ecommerce.infrastructure.service.EmailService;
+import br.com.zupacademy.henio.ecommerce.infrastructure.EmailService;
 import br.com.zupacademy.henio.ecommerce.model.Compra;
 import br.com.zupacademy.henio.ecommerce.model.EventoCompraSucesso;
 import br.com.zupacademy.henio.ecommerce.repository.CompraRepository;
